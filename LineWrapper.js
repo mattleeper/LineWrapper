@@ -1,0 +1,39 @@
+-// If a string length is greater than a specified length, 
+-// then break into smaller lines on whitespace
+-function LineWrap(n, maxLineLength) {
+-	var length = n.length;
+-
+-	if (length > maxLineLength) {
+-		var lastIndex = 0;
+-		var nextIndex = 0;
+-		var lines = [];
+-
+-		while (lastIndex < length) {
+-			var maxChunk = n.substr(lastIndex, maxLineLength);
+-
+-			// chunk is smaller than the max length so must be the tail.
+-			if (maxChunk.length < maxLineLength) {
+-				lines.push(maxChunk);
+-				return lines;
+-			}
+-
+-			nextIndex = maxChunk.lastIndexOf(' ');
+-
+-			// No whitespace found, just cut the word up
+-			if (nextIndex === -1) {
+-				lines.push(maxChunk);
+-				lastIndex = lastIndex + maxLineLength;
+-			}
+-			else {
+-				var chunk = n.substr(lastIndex, nextIndex);
+-				lastIndex = lastIndex + nextIndex + 1;
+-				lines.push(chunk);
+-			}
+-		}
+-
+-		return lines;
+-	}
+-	else {
+-		return [n];
+-	}
+-}
